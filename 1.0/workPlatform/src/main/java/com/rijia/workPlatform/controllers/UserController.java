@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.rijia.workPlatform.entity.LoginInfoEntity;
 import com.rijia.workPlatform.entity.UserEntity;
 import com.rijia.workPlatform.req.FormReq;
+import com.rijia.workPlatform.req.UserReq;
 import com.rijia.workPlatform.service.LoginInfoService;
 import com.rijia.workPlatform.service.UserService;
 import com.rijia.workPlatform.util.Common;
+import com.rijia.workPlatform.util.DateUtils;
 import com.rijia.workPlatform.util.LoginUserUtils;
 import com.rijia.workPlatform.util.MD5;
 
@@ -29,25 +31,24 @@ public class UserController {
 	@Autowired
 	private LoginInfoService loginInfoService;
 
-	@RequestMapping("/currentUser")
+	@RequestMapping(value = { "/currentUser" })
 	@ResponseBody
-	public FormReq currentUser(@RequestBody final LinkedHashMap<String, String> dataReqMap) {
-		FormReq forReq = new FormReq();
-		String deviceToken = Common.getValueFromBean(dataReqMap.get("deviceToken"));
+	public FormReq currentUser() {
+		FormReq formReq = new FormReq();
+		formReq.setMsg("没有用户登录!");
 
-		forReq.setMsg("没有用户登录!");
-		UserEntity user = LoginUserUtils.getAPISessionUser();
-		if (user != null) {
-			setLoginInfo(forReq, user, deviceToken);
+		UserReq userReq = getCurrentUser();
+		if (userReq != null) {
+			setLoginInfo(formReq, userReq.getUserId(), userReq.getUserName(), userReq.getDeviceToken());
 		}
 
-		return forReq;
+		return formReq;
 	}
 
-	@RequestMapping("/login")
+	@RequestMapping(value = { "/login" })
 	@ResponseBody
 	public FormReq login(@RequestBody final LinkedHashMap<String, String> dataReqMap) {
-		FormReq forReq = new FormReq();
+		FormReq formReq = new FormReq();
 		String name = Common.getValueFromBean(dataReqMap.get("name"));
 		String password = Common.getValueFromBean(dataReqMap.get("password"));
 		String deviceToken = Common.getValueFromBean(dataReqMap.get("deviceToken"));
@@ -56,9 +57,19 @@ public class UserController {
 		if (userEntity != null) {
 			LoginInfoEntity userOtherDeviceLoginInfo = loginInfoService.getOtherDeviceLoginInfoByUserId(deviceToken,
 					userEntity.getId());
+			boolean isDoLogin = false;
 			if (userOtherDeviceLoginInfo != null) {
-				forReq.setMsg("已在其他设备上登录! 设备ID : " + userOtherDeviceLoginInfo.getDeviceToken());
+				if (DateUtils.isOverEndTime(userOtherDeviceLoginInfo.getLoginTime())) {
+					isDoLogin = true;
+					loginInfoService.delete(userOtherDeviceLoginInfo);
+				} else {
+					formReq.setMsg("已在其他设备上登录! 设备ID : " + userOtherDeviceLoginInfo.getDeviceToken());
+				}
 			} else {
+				isDoLogin = true;
+			}
+
+			if (isDoLogin) {
 				LoginInfoEntity deviceLoginInfo = loginInfoService.getLoginInfoByDeviceToken(deviceToken);
 				if (deviceLoginInfo == null) {
 					deviceLoginInfo = new LoginInfoEntity();
@@ -66,28 +77,29 @@ public class UserController {
 				}
 				deviceLoginInfo.setUserId(userEntity.getId());
 				deviceLoginInfo.setLoginTime(new Date());
-				deviceLoginInfo = loginInfoService.save(deviceLoginInfo);
+				loginInfoService.save(deviceLoginInfo);
 
-				LoginUserUtils.setAPISessionUser(userEntity);
+				setLoginInfo(formReq, userEntity.getId(), name, deviceToken);
 
-				setLoginInfo(forReq, userEntity, deviceToken);
+				LoginUserUtils.setAPISessionUser(formReq.getUser());
 			}
+
 		} else {
-			forReq.setMsg("用户或密码错误,登录失败!");
+			formReq.setMsg("用户或密码错误,登录失败!");
 		}
 
-		return forReq;
+		return formReq;
 	}
 
-	@RequestMapping("/createUser")
+	@RequestMapping(value = { "/createUser" })
 	@ResponseBody
 	public FormReq createUser(@RequestBody LinkedHashMap<String, String> dataReqMap) {
-		FormReq forReq = new FormReq();
+		FormReq formReq = new FormReq();
 		String name = Common.getValueFromBean(dataReqMap.get("name"));
 		String password = Common.getValueFromBean(dataReqMap.get("password"));
 		String deviceToken = Common.getValueFromBean(dataReqMap.get("deviceToken"));
 
-		forReq.setMsg("注册失败!");
+		formReq.setMsg("注册失败!");
 		UserEntity userEntity = null;
 		if (!StringUtils.isEmpty(name) && !StringUtils.isEmpty(password)) {
 			userEntity = userService.findByUserName(name);
@@ -97,30 +109,38 @@ public class UserController {
 				userEntity.setPassword(MD5.string2MD5(password));
 				userEntity = userService.save(userEntity);
 
-				setLoginInfo(forReq, userEntity, deviceToken);
+				setLoginInfo(formReq, userEntity.getId(), userEntity.getName(), deviceToken);
+			} else {
+				formReq.setMsg("指定的用户名已被注册!");
 			}
 		}
 
-		return forReq;
+		return formReq;
 	}
 
-	@RequestMapping("/deleteUser")
-	@ResponseBody
-	public String deleteUser(long id) {
-		return "{}";
+	private void setLoginInfo(FormReq formReq, String userId, String userName, String deviceToken) {
+		UserReq userReq = new UserReq();
+		userReq.setUserId(userId);
+		userReq.setUserName(userName);
+		userReq.setDeviceToken(deviceToken);
+		userReq.setLogin(true);
+
+		formReq.setUser(userReq);
+		formReq.setError(false);
+		formReq.setMsg(StringUtils.EMPTY);
 	}
 
-	@RequestMapping("/updatePassword")
-	@ResponseBody
-	public String updatePassword(long id, String email, String name) {
-		return "{}";
-	}
+	private UserReq getCurrentUser() {
+		UserReq userReq = LoginUserUtils.getAPISessionUser();
+		if (userReq != null) {
+			LoginInfoEntity deviceLoginInfo = loginInfoService.getLoginInfoByDeviceToken(userReq.getDeviceToken());
+			if (DateUtils.isOverEndTime(deviceLoginInfo.getLoginTime())) {
+				loginInfoService.delete(deviceLoginInfo);
+				LoginUserUtils.clearAPISessionLoginUser();
+				userReq = null;
+			}
+		}
 
-	private void setLoginInfo(FormReq forReq, UserEntity userEntity, String deviceToken) {
-		forReq.getUser().setUserId(userEntity.getId());
-		forReq.getUser().setUserName(userEntity.getName());
-		forReq.getUser().setDeviceToken(deviceToken);
-		forReq.getUser().setLogin(true);
-		forReq.setMsg(StringUtils.EMPTY);
+		return userReq;
 	}
 }

@@ -488,6 +488,17 @@ public class DateUtils {
 		return calendar.getTime();
 	}
 
+	public static boolean isOverEndTime(Date date) {
+
+		Calendar loginTimeOutCal = Calendar.getInstance();
+		loginTimeOutCal.setTime(DateUtils.toEndOfDay(date));
+
+		Calendar newDayCal = Calendar.getInstance();
+		newDayCal.setTime(new Date());
+
+		return newDayCal.compareTo(loginTimeOutCal) > 0;
+	}
+
 	public static void main(String[] args) {
 		// System.out.println(format(getBeginDateOfCurrentMonth(), "yyyy-MM-dd
 		// HH:mm:ss SSS"));

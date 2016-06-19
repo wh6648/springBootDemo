@@ -27,4 +27,8 @@ public class LoginInfoService {
 	public LoginInfoEntity save(LoginInfoEntity info) {
 		return loginInfoDao.save(info);
 	}
+
+	public void delete(LoginInfoEntity info) {
+		loginInfoDao.delete(info);
+	}
 }

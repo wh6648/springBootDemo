@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.rijia.workPlatform.entity.UserEntity;
+import com.rijia.workPlatform.req.UserReq;
 
 /**
  * 登录用户工具类。
@@ -35,14 +35,14 @@ public class LoginUserUtils {
 	 * 
 	 * @return 登录用户
 	 */
-	public static UserEntity getSessionLoginUser() {
+	public static UserReq getSessionLoginUser() {
 
 		if (RequestContextHolder.getRequestAttributes() != null) {
-			UserEntity UserEntity = (UserEntity) RequestContextUtils.getSessionAttribute(Constants.LOGIN_USER);
-			if (UserEntity == null) {
-				UserEntity = getAPISessionUser();
+			UserReq userReq = (UserReq) RequestContextUtils.getSessionAttribute(Constants.LOGIN_USER);
+			if (userReq == null) {
+				userReq = getAPISessionUser();
 			}
-			return UserEntity;
+			return userReq;
 		}
 		return getAPISessionUser();
 	}
@@ -72,17 +72,17 @@ public class LoginUserUtils {
 	/*
 	 * 设置手机端登录用户
 	 */
-	public static void setAPISessionUser(UserEntity userEntity) {
-		RequestContextUtils.setSessionAttribute(Constants.API_USER, userEntity);
+	public static void setAPISessionUser(UserReq userReq) {
+		RequestContextUtils.setSessionAttribute(Constants.API_USER, userReq);
 	}
 
 	/*
 	 * 
 	 * 获取手机端登录用户
 	 */
-	public static UserEntity getAPISessionUser() {
+	public static UserReq getAPISessionUser() {
 		if (RequestContextHolder.getRequestAttributes() != null) {
-			return (UserEntity) RequestContextUtils.getSessionAttribute(Constants.API_USER);
+			return (UserReq) RequestContextUtils.getSessionAttribute(Constants.API_USER);
 		} else {
 			return null;
 		}
