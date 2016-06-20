@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +26,7 @@ import com.rijia.workPlatform.util.MD5;
 @Controller
 @RequestMapping("userInfo")
 public class UserController {
+	private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	private UserService userService;
@@ -48,6 +51,8 @@ public class UserController {
 	@RequestMapping(value = { "/login" })
 	@ResponseBody
 	public FormReq login(@RequestBody final LinkedHashMap<String, String> dataReqMap) {
+		logger.debug("login");
+
 		FormReq formReq = new FormReq();
 		String name = Common.getValueFromBean(dataReqMap.get("name"));
 		String password = Common.getValueFromBean(dataReqMap.get("password"));
