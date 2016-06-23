@@ -1,8 +1,12 @@
 package com.rijia.workPlatform.req;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class FormReq extends BaseReq {
-	private boolean isError = true;
+	private boolean isError = false;
 	private String msg;
+	private Map<String, Object> retMap;
 
 	public String getMsg() {
 		return msg;
@@ -20,4 +24,10 @@ public class FormReq extends BaseReq {
 		this.isError = isError;
 	}
 
+	public Map<String, Object> getRetMap() {
+		if (retMap == null) {
+			retMap = new LinkedHashMap<>();
+		}
+		return retMap;
+	}
 }

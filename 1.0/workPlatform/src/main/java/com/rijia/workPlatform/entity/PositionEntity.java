@@ -10,8 +10,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
-@Table(name = "t_user")
-public class UserEntity {
+@Table(name = "t_position")
+public class PositionEntity {
 
 	@Id
 	@Length(max = 36)
@@ -23,32 +23,7 @@ public class UserEntity {
 	@Column(name = "name")
 	private String name;
 
-	@Column(name = "password")
-	private String password;
-
-	@Column(name = "position_id")
-	private String positionId;
-
-	@Column(name = "superior_id")
-	private String superiorId;
-
-	public UserEntity() {
-	}
-
-	public String getPositionId() {
-		return positionId;
-	}
-
-	public void setPositionId(String positionId) {
-		this.positionId = positionId;
-	}
-
-	public String getSuperiorId() {
-		return superiorId;
-	}
-
-	public void setSuperiorId(String superiorId) {
-		this.superiorId = superiorId;
+	public PositionEntity() {
 	}
 
 	public String getId() {
@@ -61,14 +36,6 @@ public class UserEntity {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 }

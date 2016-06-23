@@ -26,8 +26,7 @@
 						<div class="col-md-2 column">
 							<span class="label label-default">登录信息:</span>
 						</div>
-						<div class="loginInfo col-md-10 column">
-						</div>
+						<div class="loginInfo col-md-10 column"></div>
 					</div>
 					<div class="row ">
 						<div class="col-md-6 column">
@@ -49,7 +48,12 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-6 column"></div>
+				<div class="col-md-6 column">
+					<select ng-model="position.selected">
+						<option value="">-- 请选择 --</option>
+						<option value="{{p.id}}" ng-repeat="p in position.all">{{p.name}}</option>
+					</select>
+				</div>
 			</div>
 		</div>
 

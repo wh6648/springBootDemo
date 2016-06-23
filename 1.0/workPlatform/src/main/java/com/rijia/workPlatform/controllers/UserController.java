@@ -39,6 +39,7 @@ public class UserController {
 	public FormReq currentUser() {
 		FormReq formReq = new FormReq();
 		formReq.setMsg("没有用户登录!");
+		formReq.setError(true);
 
 		UserReq userReq = getCurrentUser();
 		if (userReq != null) {
@@ -54,6 +55,8 @@ public class UserController {
 		logger.debug("login");
 
 		FormReq formReq = new FormReq();
+		formReq.setError(true);
+
 		String name = Common.getValueFromBean(dataReqMap.get("name"));
 		String password = Common.getValueFromBean(dataReqMap.get("password"));
 		String deviceToken = Common.getValueFromBean(dataReqMap.get("deviceToken"));
@@ -100,6 +103,8 @@ public class UserController {
 	@ResponseBody
 	public FormReq createUser(@RequestBody LinkedHashMap<String, String> dataReqMap) {
 		FormReq formReq = new FormReq();
+		formReq.setError(true);
+
 		String name = Common.getValueFromBean(dataReqMap.get("name"));
 		String password = Common.getValueFromBean(dataReqMap.get("password"));
 		String deviceToken = Common.getValueFromBean(dataReqMap.get("deviceToken"));
