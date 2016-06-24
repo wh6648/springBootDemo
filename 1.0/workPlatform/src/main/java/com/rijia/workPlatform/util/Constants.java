@@ -14,4 +14,6 @@ public interface Constants {
 
 	public static final String DATE_FORMAT_YYYYMMDD_HHMMSS_SSS = "yyyy-MM-dd HH:mm:ss SSS";
 
+	public static final String ENCODING_UTF8 = "UTF-8";
+
 }

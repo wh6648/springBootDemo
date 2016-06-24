@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.rijia.workPlatform.filter.APIFilter;
 import com.rijia.workPlatform.filter.APIListener;
-import com.rijia.workPlatform.filter.APIServlet;
+import com.rijia.workPlatform.util.Constants;
 
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
@@ -30,25 +30,9 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public Filter characterEncodingFilter() {
 		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-		characterEncodingFilter.setEncoding("UTF-8");
+		characterEncodingFilter.setEncoding(Constants.ENCODING_UTF8);
 		characterEncodingFilter.setForceEncoding(true);
 		return characterEncodingFilter;
-	}
-
-	@Bean
-	public ServletRegistrationBean getAPIServlet() {
-		APIServlet apiServlet = new APIServlet();
-
-		ServletRegistrationBean registrationBean = new ServletRegistrationBean();
-		registrationBean.setServlet(apiServlet);
-
-		List<String> urlMappings = new ArrayList<String>();
-		urlMappings.add("/apiServlet");// 访问，可以添加多个
-		registrationBean.setUrlMappings(urlMappings);
-
-		registrationBean.setLoadOnStartup(1);
-
-		return registrationBean;
 	}
 
 	@Bean
