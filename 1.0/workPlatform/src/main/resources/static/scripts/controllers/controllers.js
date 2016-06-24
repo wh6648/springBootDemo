@@ -1,8 +1,10 @@
 define(['angular', 'jquery', 'uiGrid'], function(angular, $) {
       'use strict';
       var ctrl = angular.module('controllers', ['ui.grid']);
-      ctrl.controller('testCtrl', ['$scope', '$location', '$q', '$http', '$compile', function($scope, $location, $q, $http, $compile) {
+      ctrl.controller('testCtrl', ['$scope', '$location', '$q', '$http', '$compile', '$timeout', '$interval', function($scope, $location, $q, $http, $compile, $timeout, $interval) {
                 $scope.positionGridOptions = {
+                  enableRowSelection : true,
+                  noUnselect : true,
                   enableFiltering : false,
                   enableColumnResizing : false,
                   onRegisterApi : function(gridApi) {
@@ -141,6 +143,12 @@ define(['angular', 'jquery', 'uiGrid'], function(angular, $) {
                                 displayName : "职务名"
                               }];
                           $scope.positionGridOptions.data = data.retMap.allPosition;
+
+                          $timeout(function() {
+                              });
+
+                          $interval(function() {
+                              }, 0, 1);
                         }
                         console.log('getAllPositionInfo 请求成功');
                       }, function(data) {

@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class MainController {
 
-	@RequestMapping("/")
+	@RequestMapping("/test")
 	@ResponseBody
 	public ModelAndView index() {
 		return new ModelAndView("test");
