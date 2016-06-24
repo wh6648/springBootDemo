@@ -55,7 +55,7 @@ define(['angular', 'jquery', 'uiGrid'], function(angular, $) {
 
                   if (positionId == null || positionId == "") {
                     $(".loginInfo").empty();
-                    $(".loginInfo").append('<span class="label label-success">' + "错误 : 职位没有设定!" + '</span>');
+                    $(".loginInfo").append('<span class="label label-success">' + "错误 : 职务没有设定!" + '</span>');
                     return;
                   }
 
@@ -138,7 +138,7 @@ define(['angular', 'jquery', 'uiGrid'], function(angular, $) {
                                 enableFiltering : false,
                                 enableSorting : false,
                                 cellTemplate : '<div class="ui-grid-cell-contents ng-binding ng-scope" title="{{row.entity.id}}">{{row.entity.name}}</div>',
-                                displayName : "职位名"
+                                displayName : "职务名"
                               }];
                           $scope.positionGridOptions.data = data.retMap.allPosition;
                         }

@@ -61,7 +61,7 @@ public class PositionController {
 				formReq.setError(false);
 				formReq.setMsg(StringUtils.EMPTY);
 			} else {
-				formReq.setMsg("指定的职位已被注册!");
+				formReq.setMsg("指定的职务已被注册!");
 			}
 		}
 

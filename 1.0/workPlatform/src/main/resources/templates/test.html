@@ -38,7 +38,7 @@
 						</div>
 						<div class="col-md-2 column">
 							<select ng-model="position.selected">
-								<option value="">-- 请选择职位 --</option>
+								<option value="">-- 请选择职务 --</option>
 								<option value="{{p.id}}" ng-repeat="p in position.all">{{p.name}}</option>
 							</select>
 						</div>
@@ -68,7 +68,7 @@
 							<div ui-grid="positionGridOptions" class="grid"></div>
 						</div>
 						<div class="col-md-2 column">
-							<input type="text" placeholder="职位" id="positionName" />
+							<input type="text" placeholder="职务" id="positionName" />
 						</div>
 						<div class="col-md-2 column">
 							<input type="button" value="savePosition"
