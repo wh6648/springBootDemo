@@ -21,7 +21,7 @@
 
 		<div class="container">
 			<div class="row ">
-				<div class="col-md-6 column">
+				<div class="col-md-12 column">
 					<div class="row ">
 						<div class="col-md-2 column">
 							<span class="label label-default">登录信息:</span>
@@ -29,30 +29,39 @@
 						<div class="loginInfo col-md-10 column"></div>
 					</div>
 					<div class="row ">
-						<div class="col-md-6 column">
+						<div class="col-md-2 column">
 							<input type="text" placeholder="用户名" id="userName" />
 						</div>
-						<div class="col-md-6 column">
+						<div class="col-md-2 column">
 							<input type="text" placeholder="密码" id="userPass" />
 						</div>
-						<select ng-model="position.selected">
-							<option value="">-- 请选择职位 --</option>
-							<option value="{{p.id}}" ng-repeat="p in position.all">{{p.name}}</option>
-						</select>
+						<div class="col-md-2 column">
+							<select ng-model="position.selected">
+								<option value="">-- 请选择职位 --</option>
+								<option value="{{p.id}}" ng-repeat="p in position.all">{{p.name}}</option>
+							</select>
+						</div>
+						<div class="col-md-2 column">
+							<select ng-model="superiorUser.selected">
+								<option value="">-- 请选择直属上级 --</option>
+								<option value="{{p.id}}" ng-repeat="p in superiorUser.all">{{p.name}}</option>
+							</select>
+						</div>
+						<div class="col-md-6 column"></div>
 					</div>
 					<div class="row ">
-						<div class="col-md-4 column">
+						<div class="col-md-1 column">
 							<input type="button" value="login" ng-click="login()" />
 						</div>
-						<div class="col-md-4 column">
+						<div class="col-md-1 column">
 							<input type="button" value="currentUser" ng-click="currentUser()" />
 						</div>
-						<div class="col-md-4 column">
+						<div class="col-md-1 column">
 							<input type="button" value="saveUser" ng-click="saveUser()" />
 						</div>
+						<div class="col-md-9 column"></div>
 					</div>
 				</div>
-				<div class="col-md-6 column"></div>
 			</div>
 		</div>
 

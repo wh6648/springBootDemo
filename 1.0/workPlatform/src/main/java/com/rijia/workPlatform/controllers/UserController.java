@@ -108,6 +108,8 @@ public class UserController {
 		String name = Common.getValueFromBean(dataReqMap.get("name"));
 		String password = Common.getValueFromBean(dataReqMap.get("password"));
 		String deviceToken = Common.getValueFromBean(dataReqMap.get("deviceToken"));
+		String positionId = Common.getValueFromBean(dataReqMap.get("positionId"));
+		String superiorId = Common.getValueFromBean(dataReqMap.get("superiorId"));
 
 		formReq.setMsg("注册失败!");
 		UserEntity userEntity = null;
@@ -117,6 +119,8 @@ public class UserController {
 				userEntity = new UserEntity();
 				userEntity.setName(name);
 				userEntity.setPassword(MD5.string2MD5(password));
+				userEntity.setPositionId(positionId);
+				userEntity.setSuperiorId(superiorId);
 				userEntity = userService.save(userEntity);
 
 				setLoginInfo(formReq, userEntity.getId(), userEntity.getName(), deviceToken);
@@ -124,6 +128,15 @@ public class UserController {
 				formReq.setMsg("指定的用户名已被注册!");
 			}
 		}
+
+		return formReq;
+	}
+
+	@RequestMapping(value = { "/getAllSuperiorUserInfo" })
+	@ResponseBody
+	public FormReq getAllSuperiorUserInfo(@RequestBody LinkedHashMap<String, String> dataReqMap) {
+		FormReq formReq = new FormReq();
+		formReq.getRetMap().put("allSuperiorUser", userService.findAll());
 
 		return formReq;
 	}

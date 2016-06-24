@@ -40,10 +40,24 @@ define(['angular', 'jquery'], function(angular, $) {
 
                   var userName = $("#userName").val();
                   var userPass = $("#userPass").val();
+                  var positionId = $scope.position.selected;
+                  var superiorId = $scope.superiorUser.selected;
+
+                  if (positionId == null || positionId == "") {
+                    $(".loginInfo").empty();
+                    $(".loginInfo").append('<span class="label label-success">' + "错误 : 职位没有设定!" + '</span>');
+                    return;
+                  }
+
+                  if (superiorId == null) {
+                    superiorId = "";
+                  }
 
                   var data = {};
                   data.name = userName;
                   data.password = userPass;
+                  data.positionId = positionId;
+                  data.superiorId = superiorId;
 
                   $http({
                         method : 'post',
@@ -114,6 +128,32 @@ define(['angular', 'jquery'], function(angular, $) {
                       });
                 }
 
+                $scope.getAllSuperiorUserInfo = function() {
+                  console.log("getAllSuperiorUserInfo");
+                  var deferred = $q.defer();
+
+                  var data = {};
+
+                  $http({
+                        method : 'post',
+                        url : 'userInfo/getAllSuperiorUserInfo',
+                        'data' : JSON.stringify(data)
+                      }).success(function(data) {
+                        deferred.resolve(data);
+                      }).error(function(data) {
+                        deferred.reject(data);
+                      });
+                  deferred.promise.then(function(data) {
+                        if (data.error == false && data.retMap) {
+                          $scope.superiorUser = {};
+                          $scope.superiorUser.all = data.retMap.allSuperiorUser;
+                        }
+                        console.log('getAllSuperiorUserInfo 请求成功');
+                      }, function(data) {
+                        console.log('getAllSuperiorUserInfo 请求失败');
+                      });
+                }
+
                 $scope.getLoginInfo = function(data) {
                   if (data) {
                     $(".loginInfo").empty();
@@ -129,6 +169,7 @@ define(['angular', 'jquery'], function(angular, $) {
                 // 页面加载
                 angular.element(document).ready(function() {
                       $scope.getAllPositionInfo();
+                      $scope.getAllSuperiorUserInfo();
                     });
               }]);
 
