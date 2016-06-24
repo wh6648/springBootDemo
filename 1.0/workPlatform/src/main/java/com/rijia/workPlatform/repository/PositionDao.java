@@ -8,4 +8,5 @@ import com.rijia.workPlatform.entity.PositionEntity;
 
 @Transactional
 public interface PositionDao extends CrudRepository<PositionEntity, String> {
+	public PositionEntity findByName(String name);
 }

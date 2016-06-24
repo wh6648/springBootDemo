@@ -29,4 +29,8 @@ public class PositionService {
 	public PositionEntity save(PositionEntity position) {
 		return positionDao.save(position);
 	}
+
+	public PositionEntity findByUserName(String name) {
+		return positionDao.findByName(name);
+	}
 }
