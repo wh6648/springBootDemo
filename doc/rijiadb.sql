@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : local_mysql
+Source Server         : MySql_localhost
 Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : rijiadb
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2016-06-19 15:11:38
+Date: 2016-06-24 17:39:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,6 +29,12 @@ CREATE TABLE `t_attendance_type` (
 -- ----------------------------
 -- Records of t_attendance_type
 -- ----------------------------
+INSERT INTO `t_attendance_type` VALUES ('b1557342-33a3-11e2-9e29-64046a960832', '晚班', 'B');
+INSERT INTO `t_attendance_type` VALUES ('b1557342-33a3-11e5-9e29-64006a260831', '晚班', 'A');
+INSERT INTO `t_attendance_type` VALUES ('b1557342-33a3-11e6-9e29-64006a260831', '中班', 'A');
+INSERT INTO `t_attendance_type` VALUES ('b1557342-33a3-11e6-9e29-64006a960831', '早班', 'A');
+INSERT INTO `t_attendance_type` VALUES ('b1557342-33a3-11e6-9e29-64006a960832', '早班', 'B');
+INSERT INTO `t_attendance_type` VALUES ('b1557342-33a3-11e6-9e29-64046a960832', '中班', 'B');
 
 -- ----------------------------
 -- Table structure for t_daily_paper
@@ -47,6 +53,7 @@ CREATE TABLE `t_daily_paper` (
   `attendance_type_id` varchar(36) DEFAULT NULL,
   `fault_list_id` varchar(36) NOT NULL,
   `u_time` datetime NOT NULL,
+  `u_user_id` varchar(36) NOT NULL,
   PRIMARY KEY (`user_id`,`work_date`,`machine_type`,`batch_number`,`line_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -100,7 +107,23 @@ CREATE TABLE `t_login_info` (
 -- ----------------------------
 -- Records of t_login_info
 -- ----------------------------
-INSERT INTO `t_login_info` VALUES ('00000000-54b3-e7c7-0000-000046bffd96', 'b1557342-33a3-11e6-9e29-64006a960834', '2016-06-19 15:10:44');
+INSERT INTO `t_login_info` VALUES ('00000000-54b3-e7c7-0000-000046bffd96', '38e62c72-39eb-11e6-9e29-64006a960834', '2016-06-24 17:08:28');
+
+-- ----------------------------
+-- Table structure for t_position
+-- ----------------------------
+DROP TABLE IF EXISTS `t_position`;
+CREATE TABLE `t_position` (
+  `id` varchar(36) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_position
+-- ----------------------------
+INSERT INTO `t_position` VALUES ('03e884b6-39eb-11e6-9e29-64006a960834', '班长');
+INSERT INTO `t_position` VALUES ('aec37c7c-39ea-11e6-9e29-64006a960834', '普通职员');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -110,11 +133,13 @@ CREATE TABLE `t_user` (
   `id` varchar(36) NOT NULL,
   `name` varchar(32) NOT NULL,
   `password` varchar(32) NOT NULL,
+  `position_id` varchar(36) DEFAULT NULL,
+  `superior_id` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('69fe4b69-35bc-11e6-b93e-0a002700000c', 'user1', '202cb962ac59075b964b07152d234b70');
-INSERT INTO `t_user` VALUES ('b1557342-33a3-11e6-9e29-64006a960834', 'abc', '202cb962ac59075b964b07152d234b70');
+INSERT INTO `t_user` VALUES ('38e62c72-39eb-11e6-9e29-64006a960834', 'user1', '202cb962ac59075b964b07152d234b70', 'aec37c7c-39ea-11e6-9e29-64006a960834', 'b1657342-33a5-11e6-9e29-64006a960836');
+INSERT INTO `t_user` VALUES ('b1657342-33a5-11e6-9e29-64006a960836', 'admin', '202cb962ac59075b964b07152d234b70', '03e884b6-39eb-11e6-9e29-64006a960834', '');
