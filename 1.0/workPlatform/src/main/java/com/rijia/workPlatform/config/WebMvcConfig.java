@@ -11,6 +11,7 @@ import org.springframework.boot.context.embedded.ServletListenerRegistrationBean
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -24,7 +25,7 @@ import com.rijia.workPlatform.util.Constants;
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		// registry.addStatusController("/403", HttpStatus.FORBIDDEN);
+		registry.addStatusController("/403", HttpStatus.FORBIDDEN);
 	}
 
 	@Bean

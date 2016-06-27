@@ -8,9 +8,15 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class MainController {
 
-	@RequestMapping("/test")
+	@RequestMapping("/")
 	@ResponseBody
 	public ModelAndView index() {
+		return new ModelAndView("403");
+	}
+
+	@RequestMapping("/test")
+	@ResponseBody
+	public ModelAndView test() {
 		return new ModelAndView("test");
 	}
 
