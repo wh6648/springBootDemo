@@ -153,7 +153,7 @@ public class UserController {
 		formReq.setMsg(StringUtils.EMPTY);
 	}
 
-	private UserReq getCurrentUser() {
+	public UserReq getCurrentUser() {
 		UserReq userReq = LoginUserUtils.getAPISessionUser();
 		if (userReq != null) {
 			LoginInfoEntity deviceLoginInfo = loginInfoService.getLoginInfoByDeviceToken(userReq.getDeviceToken());
