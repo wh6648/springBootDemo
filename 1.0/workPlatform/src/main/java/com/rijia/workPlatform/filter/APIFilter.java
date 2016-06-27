@@ -20,7 +20,7 @@ import net.sf.json.JSONObject;
 public class APIFilter extends OncePerRequestFilter {
 
 	private String[] excludeUrls = { "/", "/test", "/login", "/currentUser", "/createUser", "/getAllPositionInfo",
-			"/getAllSuperiorUserInfo" };
+			"/getAllSuperiorUserInfo", "/getAllDefect" };
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

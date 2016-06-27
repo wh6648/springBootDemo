@@ -25,10 +25,11 @@
 				<div class="col-md-12 column">
 					<div class="row ">&nbsp;</div>
 					<div class="row ">
-						<div class="col-md-2 column">
-							<span class="label label-default">登录信息:</span>
-						</div>
-						<div class="loginInfo col-md-10 column"></div>
+						<span class="label label-info">登录信息</span>
+					</div>
+					<div class="row ">&nbsp;</div>
+					<div class="row ">
+						<div class="loginInfo col-md-12 column"></div>
 					</div>
 					<div class="row ">&nbsp;</div>
 					<div class="row ">
@@ -64,6 +65,10 @@
 					</div>
 					<div class="row ">&nbsp;</div>
 					<div class="row ">
+						<span class="label label-info">职务信息</span>
+					</div>
+					<div class="row ">&nbsp;</div>
+					<div class="row ">
 						<div class="col-md-2 column">
 							<div ui-grid="positionGridOptions" class="grid"
 								ui-grid-selection=""></div>
@@ -83,6 +88,26 @@
 							<input type="button" value="updatePosition"
 								ng-click="updatePosition()" />
 						</div>
+					</div>
+					<div class="row ">&nbsp;</div>
+					<div class="row ">
+						<span class="label label-danger">缺陷列表</span>
+					</div>
+					<div class="row ">&nbsp;</div>
+					<div class="row ">
+						<div class="col-md-2 column">
+							<input type="text" placeholder="分类" id="defectType" />
+						</div>
+						<div class="col-md-2 column">
+							<input type="text" placeholder="缺陷" id="defectName" />
+						</div>
+						<div class="col-md-1 column">
+							<input type="button" value="saveDefect" ng-click="saveDefect()" />
+						</div>
+					</div>
+					<div class="row ">&nbsp;</div>
+					<div class="row ">
+						<div class="defect col-md-8 column"></div>
 					</div>
 				</div>
 			</div>

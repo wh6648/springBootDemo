@@ -30,6 +30,10 @@ public class PositionService {
 		return positionDao.save(position);
 	}
 
+	public void delete(PositionEntity position) {
+		positionDao.delete(position);
+	}
+
 	public PositionEntity findByUserName(String name) {
 		return positionDao.findByName(name);
 	}

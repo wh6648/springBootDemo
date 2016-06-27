@@ -67,4 +67,61 @@ public class PositionController {
 
 		return formReq;
 	}
+
+	@RequestMapping(value = { "/updatePositionInfo" })
+	@ResponseBody
+	public FormReq updatePositionInfo(@RequestBody LinkedHashMap<String, String> dataReqMap) {
+		logger.debug("updatePositionInfo");
+
+		FormReq formReq = new FormReq();
+		formReq.setError(true);
+
+		String oldName = Common.getValueFromBean(dataReqMap.get("name"));
+		String newName = Common.getValueFromBean(dataReqMap.get("newName"));
+
+		formReq.setMsg("更新失败!");
+		PositionEntity positionEntity = null;
+		if (!StringUtils.isEmpty(oldName) && !StringUtils.isEmpty(newName)) {
+			positionEntity = positionService.findByUserName(oldName);
+			if (positionEntity == null) {
+				formReq.setMsg("指定的职务不存在!");
+			} else {
+				positionEntity.setName(newName);
+
+				positionService.save(positionEntity);
+
+				formReq.setError(false);
+				formReq.setMsg(StringUtils.EMPTY);
+			}
+		}
+
+		return formReq;
+	}
+
+	@RequestMapping(value = { "/deletePositionInfo" })
+	@ResponseBody
+	public FormReq deletePositionInfo(@RequestBody LinkedHashMap<String, String> dataReqMap) {
+		logger.debug("deletePositionInfo");
+
+		FormReq formReq = new FormReq();
+		formReq.setError(true);
+
+		String name = Common.getValueFromBean(dataReqMap.get("name"));
+
+		formReq.setMsg("删除失败!");
+		PositionEntity positionEntity = null;
+		if (!StringUtils.isEmpty(name)) {
+			positionEntity = positionService.findByUserName(name);
+			if (positionEntity == null) {
+				formReq.setMsg("指定的职务不存在!");
+			} else {
+				positionService.delete(positionEntity);
+
+				formReq.setError(false);
+				formReq.setMsg(StringUtils.EMPTY);
+			}
+		}
+
+		return formReq;
+	}
 }
