@@ -1,0 +1,6 @@
+cp -p -r -f  "workPlatform.war" "/usr/local/tomcat/webapps/workPlatform.war"
+
+cp -p -r -f  "/usr/local/tomcat/conf/server.xml" "/home/rijia/server.xml"
+
+
+ chmod 777 /usr/local/tomcat/conf/server.xml
