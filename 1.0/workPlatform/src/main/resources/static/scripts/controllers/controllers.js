@@ -13,10 +13,14 @@ define(['angular', 'jquery', 'uiGrid'], function(angular, $) {
                 $scope.labelCssArr = ["label-default", "label-primary", "label-success", "label-info", "label-warning"];
 
                 $scope.positionGridOptions = {
+                  enableRowSelection : true,
+                  enableRowHeaderSelection : false,
+                  multiSelect : false,
+                  modifierKeysToMultiSelect : false,
+                  noUnselect : false,
                   enableFullRowSelection : true,
                   enableFiltering : false,
                   enableColumnResizing : false,
-                  multiSelect : false,
                   onRegisterApi : function(gridApi) {
                     $scope.gridApi = gridApi,
 
@@ -162,7 +166,7 @@ define(['angular', 'jquery', 'uiGrid'], function(angular, $) {
                                 enableColumnResizing : true,
                                 enableFiltering : false,
                                 enableSorting : false,
-                                cellTemplate : '<div class="ui-grid-cell-contents ng-binding ng-scope" title="{{row.entity.id}}">{{row.entity.name}}</div>',
+                                cellTemplate : '<div class="ui-grid-cell-contents ng-binding ng-scope" style="cursor: pointer;" title="{{row.entity.id}}">{{row.entity.name}}</div>',
                                 displayName : "职务名"
                               }];
                           $scope.positionGridOptions.data = data.retMap.allPosition;
