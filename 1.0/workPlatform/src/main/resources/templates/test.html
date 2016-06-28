@@ -113,6 +113,56 @@
 			</div>
 		</div>
 
+		<div class="modal fade" id="editorModal" tabindex="-1" role="dialog"
+			aria-labelledby="modalTitleLabel" aria-hidden="true">
+			<input type="hidden" value="{{editorModal.id}}" class="tmpValue" />
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">×</button>
+						<h3 class="modal-title" id="modalTitleLabel">缺陷记录</h3>
+					</div>
+
+					<div class="modal-body">
+						<div class="container">
+							<div class="row ">
+								<div class="row ">&nbsp;</div>
+								<div class="row ">
+									<div class="col-md-1 column">
+										<label>缺陷名</label>
+									</div>
+									<div class="col-md-11 column">
+										<label>{{editorModal.name}}</label>
+									</div>
+								</div>
+							</div>
+							<div class="row ">
+								<div class="row ">&nbsp;</div>
+								<div class="row ">
+									<div class="col-md-1 column">
+										<label>缺陷内容</label>
+									</div>
+									<div class="col-md-11 column">
+										<textarea rows="5" cols="60" placeholder="缺陷内容"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal"
+							aria-hidden="true" id="saveModal" ng-click="defectSave()">保存</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal"
+							aria-hidden="true" id="closeModal">关闭</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
 	</div>
 </body>
 </html>
