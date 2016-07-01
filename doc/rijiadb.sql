@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2016-07-01 16:21:08
+Date: 2016-07-01 16:51:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -162,20 +162,20 @@ CREATE TABLE `t_machine_type` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for t_position
+-- Table structure for t_position_type
 -- ----------------------------
-DROP TABLE IF EXISTS `t_position`;
-CREATE TABLE `t_position` (
+DROP TABLE IF EXISTS `t_position_type`;
+CREATE TABLE `t_position_type` (
   `id` varchar(36) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of t_position
+-- Records of t_position_type
 -- ----------------------------
-INSERT INTO `t_position` VALUES ('03e884b6-39eb-11e6-9e29-64006a960834', '班长');
-INSERT INTO `t_position` VALUES ('aec37c7c-39ea-11e6-9e29-64006a960834', '普通职员');
+INSERT INTO `t_position_type` VALUES ('03e884b6-39eb-11e6-9e29-64006a960834', '班长');
+INSERT INTO `t_position_type` VALUES ('aec37c7c-39ea-11e6-9e29-64006a960834', '普通职员');
 
 -- ----------------------------
 -- Table structure for t_process_lines_type
