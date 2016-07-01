@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2016-07-01 16:51:22
+Date: 2016-07-01 17:11:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -54,8 +54,7 @@ CREATE TABLE `t_daily_paper` (
   `defect_id` varchar(36) NOT NULL,
   `u_time` datetime DEFAULT NULL,
   `u_user_id` varchar(36) DEFAULT NULL,
-  PRIMARY KEY (`user_id`,`work_date`,`machine_type_id`,`batch_number`,`process_lines_type_id`),
-  KEY `defect_id` (`defect_id`)
+  PRIMARY KEY (`user_id`,`work_date`,`machine_type_id`,`batch_number`,`process_lines_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -119,10 +118,8 @@ CREATE TABLE `t_defect_list` (
   `defect_remarks` varchar(255) DEFAULT NULL,
   `defect_cause` varchar(255) DEFAULT NULL,
   `defect_strategy` varchar(255) DEFAULT NULL,
-  `u_time` datetime NOT NULL,
-  PRIMARY KEY (`id`,`daily_defect_id`),
-  KEY `FK_daily_paper_defect_id` (`daily_defect_id`),
-  CONSTRAINT `FK_daily_paper_defect_id` FOREIGN KEY (`daily_defect_id`) REFERENCES `t_daily_paper` (`defect_id`)
+  `u_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`,`daily_defect_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -138,7 +135,7 @@ CREATE TABLE `t_login_info` (
   `user_id` varchar(36) NOT NULL,
   `login_time` datetime NOT NULL,
   PRIMARY KEY (`device_token`),
-  KEY `FK_user_id` (`user_id`),
+  KEY `IND_user_id` (`user_id`) USING BTREE,
   CONSTRAINT `FK_user_id` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
